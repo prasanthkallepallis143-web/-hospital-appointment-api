@@ -1,0 +1,42 @@
+import { prisma } from "./lib/prisma.js";
+
+export async function createDoctor(
+  name: string,
+  specialty: string
+) {
+  return prisma.doctor.create({
+    data: {
+      name,
+      specialty,
+    },
+  });
+}
+
+export async function getDoctor(id: number) {
+  return prisma.doctor.findUnique({
+    where: {
+      id,
+    },
+  });
+}
+
+export async function listDoctorsBySpecialty(
+  specialty: string
+) {
+  return prisma.doctor.findMany({
+    where: {
+      specialty: {
+        equals: specialty,
+        mode: "insensitive",
+      },
+    },
+  });
+}
+
+export async function deleteDoctor(id: number) {
+  return prisma.doctor.delete({
+    where: {
+      id,
+    },
+  });
+}
